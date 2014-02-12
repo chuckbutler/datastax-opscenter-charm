@@ -4,7 +4,7 @@ set -eux
 
 apt-get update
 
-apt-get install curl -y
+apt-get install curl python-jinja2 -y
 
 #Add the datastax repository
 if ! [ -f "/etc/apt/sources.list.d/datastax.community.list" ]; then
