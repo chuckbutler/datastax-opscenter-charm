@@ -1,17 +1,14 @@
 name: datastax-opscenter
-summary: <Fill in summary here>
+summary: Deploys Datastax Opscenter, a cassandra management interface
 maintainer: charles <charles@Bushido>
 description: |
-  <Multi-line description here>
+ Adds the devstax apt repository, and deploys Devxtax OpsCenter - A monitoring interface for CassandraDB
 categories:
-  - misc
+  - monitoring
 subordinate: false
 provides:
-  provides-relation:
-    interface: interface-name
+  opscenter:
+    interface: http
 requires:
-  requires-relation:
-    interface: interface-name
-peers:
-  peer-relation:
-    interface: interface-name
+  db:
+    interface: cassandra
