@@ -1,0 +1,15 @@
+#!/bin/sh
+
+
+set -eux
+
+port=`config-get port`
+host=`relation-get private-address`
+#todo - get jmx port, get thrift port, ensure we are using the proper ports
+
+if [ ! -f "$CHARM_DIR/cluster-added" ]; then
+    echo "$host:$port" > $CHARM_DIR/cluster-added
+    curl -X POST -H "Content-Type: application/json" -d "{\"cassandra\":{\"seed_hosts\": \"$host\",\"api_port\":\"9160\",\"username\":\"\",\"password\":\"\"},\"jmx\":{\"port\":\"7199\",\"username\":\"\",\"password\":\"\"},\"agents\":{}}" localhost:8888/cluster-configs
+else
+    juju-log "Cluster seed cache found, skipping for autodiscovery"
+fi

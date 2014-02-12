@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -eux
+
+if [ -f "$CHARM_DIR/cluster-added" ]; then
+    rm $CHARM_DIR/cluster-added
+    juju-log("Removed cluster seed cache")
+else
+    juju-log("No cluster seed cache located - skipping")
+fi
