@@ -3,7 +3,12 @@
 set -eux
 
 port=`config-get port`
+sslenabled=`config-get ssl`
+sslport=`config-get ssl-port`
 
 open-port $port
+if [ "$sslenabled" == "True" ]; then
+    open-port $sslport
+fi
 
 service opscenterd start || service opscenterd restart
