@@ -5,5 +5,21 @@ options:
     description: "The port to run OpsCenter on"
   interface:
     type: string
-    default: None
-    description: ""
+    default: "0.0.0.0"
+    description: "Used for binding to an interface"
+  ssl:
+    type: boolean
+    default: false
+    description: "enable SSL configuration"
+  ssl-key:
+    type: string
+    default: ""
+    description: "Contents of SSL Key"
+  ssl-cert:
+    type: string
+    default: ""
+    description: "Contents of SSL Cert"
+  ssl-port:
+    type: int
+    default: 8443
+    description: "Port for SSL Secure Traffic"
