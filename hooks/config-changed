@@ -13,6 +13,10 @@ apt-get install opscenter -y
 
 # do some magic if SSL is enabled
 if [ "$sslenabled" == "True" ]; then
+    if [ -z "$sslcert" ] || [ -z "$sslkey" ]; then
+        juju-log "No SSL files provided - Waiting on user input"
+        exit 0
+    fi
     echo "$sslcert" > /var/lib/opscenter/ssl/opscenter.pem
     echo "$sslkey" > /var/lib/opscenter/ssl/opscenter.key
 fi
