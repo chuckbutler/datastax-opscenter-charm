@@ -11,7 +11,17 @@ if ! [ -f "/etc/apt/sources.list.d/datastax.community.list" ]; then
     echo "deb http://debian.datastax.com/community stable main" | \
     tee -a /etc/apt/sources.list.d/datastax.community.list
 
-    curl -L http://debian.datastax.com/debian/repo_key | apt-key add -
+    curl -o /tmp/datastax_key http://debian.datastax.com/debian/repo_key
+
+    cp $CHARM_DIR/templates/datastax-sums /tmp/datastax-sums
+    cd /tmp
+    if sha1sum -c datastax-sums --quiet; then
+        cat datastax_key | apt-key add -
+    else
+        juju-log "Unable to validate DataStax Key - PANIC!"
+        echo "Failed validation of key"
+        exit 0
+    fi
     apt-get update
 fi
 
