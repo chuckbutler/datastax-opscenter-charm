@@ -1,4 +1,4 @@
-name: datastax-opscenter
+name: opscenter
 summary: Deploys Datastax Opscenter, a cassandra management interface
 maintainer: charles <charles@Bushido>
 description: |
