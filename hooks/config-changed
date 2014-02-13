@@ -2,6 +2,24 @@
 
 set -eux
 
+port=`config-get port`
+interface=`config-get interface`
+sslenabled=`config-get ssl`
+sslkey=`config-get ssl-key`
+sslcert=`config-get ssl-cert`
+sslport=`config-get ssl-port`
+
 apt-get install opscenter -y
 
+# do some magic if SSL is enabled
+if [ "$sslenabled" == "True" ]; then
+    echo "$sslcert" > /var/lib/opscenter/ssl/opscenter.pem
+    echo "$sslkey" > /var/lib/opscenter/ssl/opscenter.key
+fi
+
 #todo update templated config file
+python templates/generate.py templates/config.conf.j2 \
+    -v port=$port -v interface=$interface \
+    -v sslenabled=$sslenabled -v sslport=$sslport > /etc/opscenter/opscenterd.conf
+
+hooks/start
